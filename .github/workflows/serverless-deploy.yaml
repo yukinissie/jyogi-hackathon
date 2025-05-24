@@ -1,0 +1,47 @@
+name: Deploy Serverless
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "jyogi-hackathon-line-bot/**"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    defaults:
+      run:
+        working-directory: ./jyogi-hackathon-line-bot
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ./jyogi-hackathon-line-bot/.node-version
+          cache: "npm"
+          cache-dependency-path: ./jyogi-hackathon-line-bot/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.LINE_BOT_AWS_ROLE_TO_ASSUME }}
+          aws-region: ap-northeast-1
+
+      - name: Deploy to AWS
+        run: serverless deploy --stage prod
+        env:
+          SERVERLESS_ACCESS_KEY: ${{ secrets.LINE_BOT_SERVERLESS_ACCESS_KEY }}
