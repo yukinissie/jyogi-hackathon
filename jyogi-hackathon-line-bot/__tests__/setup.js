@@ -3,10 +3,8 @@ const mockDocClient = {
   send: jest.fn(),
 };
 
-const mockClient = {};
-
 jest.doMock("@aws-sdk/client-dynamodb", () => ({
-  DynamoDBClient: jest.fn(() => mockClient),
+  DynamoDBClient: jest.fn(() => {}),
 }));
 
 jest.doMock("@aws-sdk/lib-dynamodb", () => ({
@@ -17,8 +15,17 @@ jest.doMock("@aws-sdk/lib-dynamodb", () => ({
   PutCommand: jest.fn(),
 }));
 
-// モックオブジェクトをエクスポート
+jest.doMock("@line/bot-sdk", () => ({
+  messagingApi: {
+    MessagingApiClient: jest.fn(() => {
+      return {
+        replyMessage: jest.fn().mockResolvedValue(undefined),
+      };
+    }),
+  },
+  middleware: jest.fn(() => (req, res, next) => next()),
+}));
+
 module.exports = {
   mockDocClient,
-  mockClient,
 };

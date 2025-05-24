@@ -1,11 +1,11 @@
 const request = require("supertest");
 const { mockDocClient } = require("./setup");
 
-// 環境変数をセット
 process.env.USERS_TABLE = "test-users-table";
+process.env.LINE_CHANNEL_ACCESS_TOKEN = "dummy-token";
+process.env.LINE_CHANNEL_SECRET = "dummy-secret";
 
-// appをインポート（モック設定後）
-const app = require("../app");
+const app = require("../dist/app.js");
 
 describe("Expressアプリのテスト", () => {
   beforeEach(() => {
@@ -90,6 +90,39 @@ describe("Expressアプリのテスト", () => {
         .expect(500);
 
       expect(response.body).toEqual({ error: "Could not create user" });
+    });
+  });
+
+  describe("POST /webhook (LINE Messaging API)", () => {
+    test("テキストメッセージを送ると同じ内容が返る", async () => {
+      const event = {
+        type: "message",
+        replyToken: "dummy-token",
+        message: {
+          type: "text",
+          text: "こんにちは！",
+        },
+      };
+      const response = await request(app)
+        .post("/webhook")
+        .send({ events: [event] })
+        .expect(200);
+      expect(response.body).toEqual({ status: "ok" });
+    });
+    test("テキスト以外のメッセージは返さない", async () => {
+      const event = {
+        type: "message",
+        replyToken: "dummy-token",
+        message: {
+          type: "image",
+          id: "img-id",
+        },
+      };
+      const response = await request(app)
+        .post("/webhook")
+        .send({ events: [event] })
+        .expect(200);
+      expect(response.body).toEqual({ status: "ok" });
     });
   });
 

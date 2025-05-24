@@ -9,6 +9,8 @@ stages:
   default:
     params:
       tableName: "users-table-${sls:stage}"
+      lineChannelAccessToken: "your-line-channel-access-token"
+      lineChannelSecret: "your-line-channel-secret"
 
 provider:
   name: aws
@@ -29,6 +31,8 @@ provider:
             - Fn::GetAtt: [UsersTable, Arn]
   environment:
     USERS_TABLE: ${param:tableName}
+    LINE_CHANNEL_ACCESS_TOKEN: ${param:lineChannelAccessToken}
+    LINE_CHANNEL_SECRET: ${param:lineChannelSecret}
 
 functions:
   api:
