@@ -5,13 +5,12 @@ on:
     branches:
       - main
 
-defaults:
-  run:
-    working-directory: ./react-image-renderer
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./react-image-renderer
 
     steps:
       - name: Check out the code
