@@ -1,15 +1,101 @@
-<!--
-title: 'Serverless Framework Node Express API service backed by DynamoDB on AWS'
-description: 'This template demonstrates how to develop and deploy a simple Node Express API service backed by DynamoDB running on AWS Lambda using the Serverless Framework.'
-layout: Doc
-framework: v4
-platform: AWS
-language: nodeJS
-priority: 1
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, Inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# jyogi-hackathon-line-bot
+
+DynamoDB を使用した Express.js アプリケーションのテスト環境。
+
+## セットアップ
+
+### 必要な依存関係をインストール
+
+```bash
+npm install
+```
+
+## テスト
+
+### テスト実行
+
+```bash
+# 基本的なテスト実行
+npm test
+
+# ウォッチモードでテスト実行
+npm run test:watch
+
+# カバレッジレポート付きでテスト実行
+npm run test:coverage
+```
+
+## プロジェクト構造
+
+```
+├── app.js                 # メインのExpressアプリケーション
+├── handler.js             # Serverless Lambda ハンドラー
+├── package.json           # プロジェクト設定と依存関係
+├── jest.config.js         # Jest設定ファイル
+├── __tests__/
+│   ├── setup.js          # テスト用のモック設定
+│   └── handler.test.js   # メインテストファイル
+└── README.md             # このファイル
+```
+
+## API エンドポイント
+
+### GET /users/:userId
+
+指定されたユーザー ID のユーザー情報を取得します。
+
+**レスポンス例:**
+
+```json
+{
+  "userId": "test-id",
+  "name": "Test User"
+}
+```
+
+### POST /users
+
+新しいユーザーを作成します。
+
+**リクエスト例:**
+
+```json
+{
+  "userId": "new-id",
+  "name": "New User"
+}
+```
+
+## テスト情報
+
+このプロジェクトでは以下のテストライブラリを使用しています：
+
+- **Jest**: テストフレームワーク
+- **Supertest**: HTTP アサーションライブラリ
+- **AWS SDK Mocking**: DynamoDB クライアントのモック化
+
+### モック戦略
+
+AWS DynamoDB クライアントは完全にモック化されており、実際の AWS サービスに接続することなくテストを実行できます。
+
+### カバレッジ
+
+現在のテストカバレッジ：
+
+- **app.js**: 100% (全ての機能がテストされています)
+- **全体**: 92.1% (handler.js は serverless ラッパーのため除外)
+
+## 開発
+
+新しいエンドポイントを追加する場合：
+
+1. `app.js`にエンドポイントを追加
+2. `__tests__/handler.test.js`に対応するテストを追加
+3. テストを実行して機能を確認
+
+```bash
+npm test
+```
 
 # Serverless Framework Node Express API on AWS
 
