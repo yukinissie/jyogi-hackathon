@@ -19,7 +19,7 @@ public class BannerImageLoadController : MonoBehaviour
 
     IEnumerator GetTexture()
     {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://sample-portfolio.yukinissie.com/images/sample-og-image.jpg");
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://sample-portfolio.yukinissie.com/images/image3.png");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
