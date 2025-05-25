@@ -1,13 +1,15 @@
 # Jyogi Hackathon プロジェクト構成
 
-このプロジェクトは、LINE Bot のバックエンドと画像レンダリング用の React アプリケーションを含むハッカソンプロジェクトです。
+このプロジェクトは、LINE Bot のバックエンド、画像レンダリング用の React アプリケーション、Unity/Flutter ベースの画像レンダラーを含むハッカソンプロジェクトです。
 
 ## 🏗️ プロジェクト概要
 
-プロジェクトは 2 つの主要なコンポーネントで構成されています：
+プロジェクトは 4 つの主要なコンポーネントで構成されています：
 
 1. **LINE Bot API (Serverless)** - AWS Lambda + DynamoDB を使用したサーバーレスバックエンド
 2. **React Image Renderer** - Next.js ベースのフロントエンドアプリケーション
+3. **Unity Image Renderer** - Unity ベースの画像レンダリングサブプロジェクト
+4. **Flutter Image Renderer** - Flutter ベースの画像レンダリングサブプロジェクト
 
 ## 📁 ディレクトリ構成
 
@@ -17,7 +19,9 @@ jyogi-hackathon/
 │   ├── serverless-deploy.yaml   # LINE Bot自動デプロイ
 │   └── cicd.yaml               # React App自動デプロイ
 ├── jyogi-hackathon-line-bot/   # LINE Botバックエンド
-└── react-image-renderer/       # React フロントエンド
+├── react-image-renderer/       # React フロントエンド
+├── unity-image-renderer/       # Unity 画像レンダラー
+└── flutter_image_renderer/     # Flutter 画像レンダラー
 ```
 
 ## 🤖 LINE Bot バックエンド (`jyogi-hackathon-line-bot/`)
@@ -81,6 +85,22 @@ jyogi-hackathon/
 - **プロバイダー**: Vercel
 - **CI/CD**: テスト → リント → ビルド → デプロイ
 
+## 🎮 Unity Image Renderer (`unity-image-renderer/`)
+
+### 技術スタック
+
+- **エンジン**: Unity
+- **用途**: 画像レンダリング、2D/3D アセット処理
+- **主要ファイル**: Unity プロジェクト標準構成（`*.csproj`, `Assets/`, `*.sln` など）
+
+## 📱 Flutter Image Renderer (`flutter_image_renderer/`)
+
+### 技術スタック
+
+- **フレームワーク**: Flutter
+- **用途**: クロスプラットフォーム画像レンダリング
+- **主要ファイル**: `pubspec.yaml`, `lib/`, `test/` など
+
 ## 🚀 CI/CD パイプライン
 
 ### LINE Bot デプロイ (`serverless-deploy.yaml`)
@@ -116,6 +136,8 @@ jyogi-hackathon/
 - npm
 - AWS CLI (LINE Bot 開発時)
 - Serverless Framework CLI
+- Unity Hub + Unity Editor（Unity 開発時）
+- Flutter SDK（Flutter 開発時）
 
 ### LINE Bot 開発
 
@@ -137,6 +159,19 @@ npm run lint         # リント実行
 npm run build        # プロダクションビルド
 ```
 
+### Unity Image Renderer 開発
+
+- Unity Hub でプロジェクトを開き、Unity Editor で編集・ビルド
+
+### Flutter Image Renderer 開発
+
+```bash
+cd flutter_image_renderer
+flutter pub get
+flutter run           # 開発サーバー起動
+flutter test          # テスト実行
+```
+
 ## 🌟 特徴
 
 - **モノレポ構成**: 関連する複数のサービスを一つのリポジトリで管理
@@ -144,6 +179,7 @@ npm run build        # プロダクションビルド
 - **スケーラブル**: サーバーレスアーキテクチャによる自動スケーリング
 - **モダンスタック**: 最新のフレームワークとツールチェーン
 - **品質保証**: 自動テスト + リンティング
+- **マルチプラットフォーム**: Web/モバイル/ゲームエンジン対応
 
 ## 📝 開発時の注意事項
 
@@ -151,5 +187,6 @@ npm run build        # プロダクションビルド
 2. **デプロイトリガー**: 各サービスのディレクトリ内の変更のみが対応するデプロイをトリガー
 3. **環境変数**: 各デプロイメントに必要なシークレットが GitHub Secrets に設定済み
 4. **リージョン**: AWS リソースは ap-northeast-1 (東京) リージョンにデプロイ
+5. **Unity/Flutter**: 各公式推奨バージョンを利用
 
-このプロジェクト構成により、LINE Bot のバックエンドとフロントエンドアプリケーションを効率的に開発・デプロイできます。
+このプロジェクト構成により、LINE Bot のバックエンド、フロントエンドアプリケーション、Unity/Flutter 画像レンダラーを効率的に開発・デプロイできます。
