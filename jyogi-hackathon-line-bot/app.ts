@@ -2,8 +2,8 @@ import express from "express";
 import {
   messagingApi,
   WebhookEvent,
-  TextMessage,
   middleware,
+  ImageMessage,
 } from "@line/bot-sdk";
 
 export const lineClient = new messagingApi.MessagingApiClient({
@@ -26,17 +26,20 @@ app.post(
         if (
           event.type === "message" &&
           event.message &&
-          event.message.type === "text"
+          event.message.type === "text" &&
+          event.message.text === "承のコマを読む"
         ) {
-          // 受け取ったテキストをそのまま返す
           try {
             await lineClient.replyMessage({
               replyToken: event.replyToken,
               messages: [
                 {
-                  type: "text",
-                  text: event.message.text,
-                } as TextMessage,
+                  type: "image",
+                  originalContentUrl:
+                    "https://sample-portfolio.yukinissie.com/images/image2.png",
+                  previewImageUrl:
+                    "https://sample-portfolio.yukinissie.com/images/image2.png",
+                } as ImageMessage,
               ],
             });
           } catch (err) {
