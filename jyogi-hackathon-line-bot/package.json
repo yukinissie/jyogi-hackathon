@@ -14,7 +14,7 @@
     "@aws-sdk/client-dynamodb": "^3.817.0",
     "@aws-sdk/lib-dynamodb": "^3.817.0",
     "@line/bot-sdk": "^9.9.0",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "serverless-http": "^3.2.0"
   },
   "devDependencies": {
